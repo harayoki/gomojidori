@@ -9,7 +9,7 @@ Windows 11 / Python 3.11 で開発。その他環境での動作は未検証。
 
 ## 簡単な使い方
 
-`python .\src\gomojidori.py --ui`
+`python .\gomojidori.py --ui`
 を実行し、表示されたURLをクリックしてブラウザで実行。
 
 ## 入力テキストの簡単な説明

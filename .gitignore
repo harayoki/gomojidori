@@ -75,7 +75,7 @@ desktop.ini
 out/*
 !out/.gitkeep
 
-**/fonts/*
+fonts/*
 .gradio
 ~*
 *~
