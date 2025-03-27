@@ -1,5 +1,5 @@
 ---
-title: gomojidori
+title: 5字取り
 emoji: 🖋️
 colorFrom: indigo
 colorTo: indigo
@@ -9,9 +9,9 @@ app_file: app.py
 pinned: false
 ---
 
-# ５文字取り
+# 5字取り
 
-入力スタッフロールテキストを5文字取りルールで並べてSVG出力するツール。
+入力スタッフロールテキストを5字取りルールで並べてSVG出力するツール。
 コマンドラインインターフェースとGUIインターフェースを持つ。
 
 ## 動作環境
@@ -20,7 +20,7 @@ Windows 11 / Python 3.11 で開発。その他環境での動作は未検証。
 
 ## 簡単な使い方
 
-`python .\gomojidori.py --ui`
+`python .\gojidori.py --ui`
 を実行し、表示されたURLをクリックしてブラウザで実行。
 
 ## 入力テキストの簡単な説明
@@ -40,12 +40,12 @@ Windows 11 / Python 3.11 で開発。その他環境での動作は未検証。
 ## コマンドヘルプ
 
 ```
-usage: gomojidori.py [-h] [-f FONT] [-s FONT_SIZE] [-sp FONT_SPACE]
+usage: gojidori.py [-h] [-f FONT] [-s FONT_SIZE] [-sp FONT_SPACE]
                      [-ms MIN_SCALE] [-c FONT_COLOR] [-l LINE_HEIGHT]
                      [--space-line-height SPACE_LINE_HEIGHT] [-w WIDTH]
                      [-i INPUT] [-o OUTPUT] [--debug] [--ui]
 
-５文字取りルールで入力スタッフロールテキストをSVGに変換する
+5字取りルールで入力スタッフロールテキストをSVGに変換する
 
 options:
   -h, --help            show this help message and exit

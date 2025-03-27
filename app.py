@@ -1,4 +1,4 @@
-from gomojidori import run_ui, get_arg_parser, DEFAULT_INPUT
+from gojidori import run_ui, get_arg_parser, DEFAULT_INPUT
 
 parser = get_arg_parser()
 args = parser.parse_args()

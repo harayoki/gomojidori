@@ -286,14 +286,14 @@ def run_ui(args):
             gr.File(label="SVGファイル ダウンロード"),
             gr.HTML(label="プレビュー")
         ],
-        title="＊５文字取り＊ スタッフロールSVG作成ツール",
-        description="５文字取りルールに則り、入力されたスタッフロールテキストをSVGファイルに変換します。"
+        title="＊５字取り＊ スタッフロールSVG作成ツール",
+        description="５字取りルールに則り、入力されたスタッフロールテキストをSVGファイルに変換します。"
     )
     iface.launch()
 
 
 def get_arg_parser():
-    parser = argparse.ArgumentParser(description='５文字取りルールで入力スタッフロールテキストをSVGに変換する')
+    parser = argparse.ArgumentParser(description='5字取りルールで入力スタッフロールテキストをSVGに変換する')
     parser.add_argument('-f', '--font', default=get_default_font(), help='フォントファイル（ttf）のパス')
     parser.add_argument('-s', '--font-size', type=int, default=50, help='フォントサイズ')
     parser.add_argument('-sp', '--font-space', type=int, default=2, help='フォントスペース')
