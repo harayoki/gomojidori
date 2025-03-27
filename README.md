@@ -14,6 +14,12 @@ pinned: false
 入力スタッフロールテキストを5字取りルールで並べてSVG出力するツール。
 コマンドラインインターフェースとGUIインターフェースを持つ。
 
+## webアプリ
+
+huggingfaceでホスト中
+
+https://huggingface.co/spaces/harayoki/gojidori
+
 ## 動作環境
 
 Windows 11 / Python 3.11 で開発。その他環境での動作は未検証。
@@ -35,7 +41,8 @@ Windows 11 / Python 3.11 で開発。その他環境での動作は未検証。
 
 基本的にコマンドライン動作に準ずる。後述のコマンドラインヘルプを参照。
 
-![image](https://github.com/user-attachments/assets/6d846675-dadf-48f7-a364-473eae305b40)
+![image](https://github.com/user-attachments/assets/b12c895d-91f4-42e0-97a9-101c870bad95)
+
 
 ## コマンドヘルプ
 
