@@ -34,3 +34,6 @@ options:
   --debug               デバッグ表示（中央線・ガイド）
   --ui                  GradioによるUIを表示する
 ```
+
+![image](https://github.com/user-attachments/assets/6d846675-dadf-48f7-a364-473eae305b40)
+
