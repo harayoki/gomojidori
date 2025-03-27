@@ -294,7 +294,7 @@ def run_ui(args):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='テキストをSVGに変換するツール')
+    parser = argparse.ArgumentParser(description='５文字取りルールで入力スタッフロールテキストをSVGに変換する')
     parser.add_argument('-f', '--font', default=get_default_font(), help='フォントファイル（ttf）のパス')
     parser.add_argument('-s', '--font-size', type=int, default=50, help='フォントサイズ')
     parser.add_argument('-sp', '--font-space', type=int, default=2, help='フォントスペース')
