@@ -1,3 +1,14 @@
+---
+title: gomojidori
+emoji: 🖋️
+colorFrom: indigo
+colorTo: indigo
+sdk: gradio
+sdk_version: "5.23.1"
+app_file: app.py
+pinned: false
+---
+
 # ５文字取り
 
 入力スタッフロールテキストを5文字取りルールで並べてSVG出力するツール。
