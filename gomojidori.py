@@ -4,7 +4,7 @@ from PIL import ImageFont, ImageDraw, Image
 from pathlib import Path
 from fontTools.ttLib import TTFont
 import os
-import platform
+import tempfile
 import re
 import gradio as gr
 
@@ -33,19 +33,7 @@ def list_fonts():
 
 
 def get_default_font(local_mode=True):
-    if not local_mode:
-        fonts = list_fonts()
-        if fonts:
-            return FONT_DIR / fonts[0]
-        return None
-    system = platform.system()
-    if system == 'Windows':
-        default_font = "C:\\Windows\\Fonts\\meiryo.ttc"
-    elif system == 'Darwin':
-        default_font = "/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc"
-    else:
-        default_font = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-    return default_font if os.path.exists(default_font) else None
+    return (FONT_DIR / "NotoSansJP-Medium.ttf").as_posix()
 
 
 def get_font_weight_name(font_path: str) -> str | None:
@@ -71,8 +59,7 @@ def draw_fixed_width_text(dwg, text, font, font_weight, y, area_x, base_area_wid
         "bold": "bold",
         "semibold": "bold",
         "extrabold": "bold",
-        "black": "bold",
-        # "thin": "lighter"
+        "black": "bold"
     }
     font_weight = dont_weight_map.get(font_weight.lower(), "normal")
 
@@ -119,10 +106,6 @@ def draw_fixed_width_text(dwg, text, font, font_weight, y, area_x, base_area_wid
                 font_family=font_family, fill=font_color
             ))
 
-    # if num_chars < 5:
-    #     # debug用
-    #     return
-
     if num_chars == 1:
         put_text(text, C_POS, y, MID)
         return
@@ -151,8 +134,6 @@ def draw_fixed_width_text(dwg, text, font, font_weight, y, area_x, base_area_wid
     last_w = char_widths[-1]
     total_char_width = sum(char_widths)
     margin_rest = base_area_width - total_char_width
-    inner_left = L_POS + first_w
-    inner_right = R_POS - last_w
     step = (R_POS - L_POS) / (num_chars - 1)
 
     if num_chars == 4:
@@ -200,7 +181,7 @@ def draw_fixed_width_text(dwg, text, font, font_weight, y, area_x, base_area_wid
 
 def render_text_to_svg(
         text, font_path, font_size, font_space, min_scale,
-        line_height, space_line_height, svg_width, output_file, font_color, debug=False):
+        line_height, space_line_height, svg_width, output_file: str | None, font_color, debug=False):
     font = ImageFont.truetype(str(font_path), font_size)
     lines = text.split('\n')
     svg_height = 0
@@ -249,8 +230,9 @@ def render_text_to_svg(
             base_area_width=base_area_width, font_color=font_color, min_scale=min_scale
         )
         y_cursor += h
-    dwg.save()
-    return output_file
+    if output_file:
+        dwg.save()
+    return dwg.tostring()
 
 
 def run_ui(args):
@@ -267,17 +249,19 @@ def run_ui(args):
             with open("error.txt", "w", encoding="utf-8") as f:
                 f.write("フォントが見つかりませんでした。")
             return "エラー: フォントが見つかりません。", None
-        render_text_to_svg(
+        svg_content = render_text_to_svg(
             text, font_path, int(font_size), int(font_space), float(min_scale), int(line_height), int(space_line_height),
-            int(svg_width), output_filename, text_color, debug
+            int(svg_width), None, text_color, debug
         )
-        with open(output_filename, 'r', encoding='utf-8') as f:
-            svg_content = f.read()
+        # print(f"SVG: {svg_content[:100]}...")
         scale = scale or "0.25"
         scale_float = float(scale)
         width_style = f"width: {int(int(svg_width) * scale_float)}px;"
         scaled_svg = \
             f'<div style="transform: scale({scale}); transform-origin: top left; {width_style}">{svg_content}</div>'
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".svg", mode="w", encoding="utf-8") as f:
+            f.write(svg_content)
+            output_filename = f.name
         return output_filename, scaled_svg
     default_text = args.input or ""
     iface = gr.Interface(
@@ -334,8 +318,6 @@ def main():
     else:
         args.input = DEFAULT_INPUT
     if args.ui:
-        if args.output == "":
-            args.output = "out/out.svg"
         run_ui(args)
     else:
         if not args.output:
@@ -343,6 +325,8 @@ def main():
             args.output = f"{input_basename}.svg"
         regex_color = r'^#[0-9a-fA-F]{6}$'
         assert re.match(regex_color, args.font_color) is not None, "フォントカラーは #RRGGBB 形式で指定してください"
+        if args.font:
+            assert os.path.exists(args.font), "フォントファイルが見つかりません"
         render_text_to_svg(
             text=args.input,
             font_path=args.font,
