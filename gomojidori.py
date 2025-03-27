@@ -261,7 +261,7 @@ def run_ui(args):
 
     def generate_svg(text, font_name, font_size, font_space, min_scale, line_height, space_line_height,
                      svg_width, text_color, debug, scale):
-        output_filename = "output.svg"
+        output_filename = args.output
         font_path = FONT_DIR / font_name
         if not font_path.exists():
             with open("error.txt", "w", encoding="utf-8") as f:
@@ -319,7 +319,7 @@ def get_arg_parser():
     parser.add_argument('--space-line-height', type=int, default=40, help='スペースのみの行の高さ')
     parser.add_argument('-w', '--width', type=int, default=1280, help='SVGの横幅')
     parser.add_argument('-i', '--input', help='入力テキストファイル')
-    parser.add_argument('-o', '--output', help='出力SVGファイル名')
+    parser.add_argument('-o', '--output', help='出力SVGファイル名', default="")
     parser.add_argument('--debug', action='store_true', help='デバッグ表示（中央線・ガイド）')
     parser.add_argument('--ui', action='store_true', help='GradioによるUIを表示する')
     return parser
@@ -334,6 +334,8 @@ def main():
     else:
         args.input = DEFAULT_INPUT
     if args.ui:
+        if args.output == "":
+            args.output = "out/out.svg"
         run_ui(args)
     else:
         if not args.output:
